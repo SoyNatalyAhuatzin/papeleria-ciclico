@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "route": "/*",
+      "serve": "/inventario.js",
+      "methods": ["GET", "POST"]
+    }
+  ],
+  "platform": {
+    "apiRuntime": "node:18"
+  }
+}

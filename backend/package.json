@@ -1,0 +1,28 @@
+{
+  "name": "enfrente",
+  "version": "1.0.0",
+  "main": "inventario.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node inventario.js",
+    "build": "echo No build required for Node.js backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "engines": {
+    "node": ">=18.20.8"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "nodemailer": "^7.0.3",
+    "open": "^10.1.2"
+  }
+}
