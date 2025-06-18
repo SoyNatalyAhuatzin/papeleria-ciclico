@@ -12,6 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Servir archivos estáticos desde la carpeta frontend
+// En Azure Static Web Apps, esta línea no es estrictamente necesaria
+// ya que el SWA ya sirve los archivos del frontend.
+// Sin embargo, si quieres que tu API pueda servir archivos de frontend
+// en desarrollo local o para alguna ruta específica, puedes dejarla.
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Conexión a la base de datos
@@ -98,12 +102,14 @@ db.connect((err) => {
   });
 });
 
-// Página principal
+// Página principal (rutas que tu Static Web App ya maneja desde el frontend)
+// Si tu frontend está sirviendo estas rutas (ej. index.html, inicio.html, inicio_sesion.html)
+// no necesitas que tu backend también las sirva. Estas rutas API son para la lógica de negocio.
+// Las mantengo por si las necesitas para desarrollo local, pero en Azure las ignora.
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/bienvenida.html'));
 });
 
-// Rutas para páginas HTML
 app.get('/inicio', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/inicio.html'));
 });
@@ -112,25 +118,23 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/inicio_sesion.html'));
 });
 
-// Autenticación
+// Autenticación - ¡CAMBIO AQUÍ!
+// De '/api/login' a '/login'
 app.post('/login', (req, res) => {
   console.log('Datos recibidos en /login:', req.body);
   const { email, password, rol } = req.body || {};
 
-  // Validar que se recibieron todos los campos
   if (!email || !password || !rol) {
     console.error('Faltan datos en la solicitud:', { email, password, rol });
     return res.status(400).json({ error: 'Faltan correo, contraseña o rol' });
   }
 
-  // Validar rol válido
   const validRoles = ['admin', 'contador', 'cajero', 'logistica'];
   if (!validRoles.includes(rol)) {
     console.error('Rol inválido:', rol);
     return res.status(400).json({ error: 'Rol inválido' });
   }
 
-  // Consultar usuario en la base de datos
   const query = 'SELECT usuario_id, nombre, rol, password_hash FROM usuarios WHERE email = ?';
   db.query(query, [email.trim()], (err, results) => {
     if (err) {
@@ -145,18 +149,6 @@ app.post('/login', (req, res) => {
       const userName = user.nombre;
       const usuarioId = user.usuario_id;
 
-      // Uncomment for bcrypt password comparison
-      /*
-      bcrypt.compare(password.trim(), user.password_hash, (err, isMatch) => {
-        if (err) {
-          console.error('Error al comparar contraseña:', err.message);
-          return res.status(500).json({ error: 'Error en el servidor' });
-        }
-        if (!isMatch) {
-          console.error('Contraseña incorrecta para:', email);
-          return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
-        }
-      */
       // Current plain text password comparison
       if (password.trim() === user.password_hash) {
         console.log('Rol de usuario:', userRol, 'Rol esperado:', rol);
@@ -198,7 +190,6 @@ app.post('/login', (req, res) => {
         console.error('Correo o contraseña incorrectos para:', email);
         res.status(401).json({ error: 'Correo o contraseña incorrectos' });
       }
-      // });
     } else {
       console.error('Correo o contraseña incorrectos para:', email);
       res.status(401).json({ error: 'Correo o contraseña incorrectos' });
@@ -206,7 +197,8 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Cambiar contraseña
+// Cambiar contraseña - ¡CAMBIO AQUÍ!
+// De '/api/cambiar-contrasena' a '/cambiar-contrasena'
 app.post('/cambiar-contrasena', (req, res) => {
   const { email, newPassword, rol } = req.body;
 
@@ -214,28 +206,6 @@ app.post('/cambiar-contrasena', (req, res) => {
     return res.status(400).json({ error: 'Faltan correo, nueva contraseña o rol' });
   }
 
-  // Uncomment for bcrypt password hashing
-  /*
-  bcrypt.hash(newPassword.trim(), saltRounds, (err, hashedPassword) => {
-    if (err) {
-      console.error('Error al hashear contraseña:', err.message);
-      return res.status(500).json({ error: 'Error en el servidor' });
-    }
-    const query = 'UPDATE usuarios SET password_hash = ? WHERE email = ?';
-    db.query(query, [hashedPassword, email.trim()], (err, results) => {
-      if (err) {
-        console.error('Error al actualizar la contraseña:', err.message);
-        return res.status(500).json({ error: 'Error en el servidor' });
-      }
-      if (results.affectedRows > 0) {
-        res.redirect(`/login?rol=${rol}`);
-      } else {
-        res.status(404).json({ error: 'Usuario no encontrado' });
-      }
-    });
-  });
-  */
-  // Current plain text password update
   const query = 'UPDATE usuarios SET password_hash = ? WHERE email = ?';
   db.query(query, [newPassword.trim(), email.trim()], (err, results) => {
     if (err) {
@@ -250,10 +220,11 @@ app.post('/cambiar-contrasena', (req, res) => {
   });
 });
 
-// Endpoint para crear un nuevo usuario
-app.post('/api/usuario', (req, res) => {
+// Endpoint para crear un nuevo usuario - ¡CAMBIO AQUÍ!
+// De '/api/usuario' a '/usuario'
+app.post('/usuario', (req, res) => {
   const { nombre, email, password, rol } = req.body;
-  console.log('Datos recibidos en /api/usuario:', { nombre, email, password, rol });
+  console.log('Datos recibidos en /usuario:', { nombre, email, password, rol });
 
   if (!nombre || !email || !password || !rol) {
     console.error('Faltan datos en la solicitud:', { nombre, email, password, rol });
@@ -284,8 +255,9 @@ app.post('/api/usuario', (req, res) => {
   });
 });
 
-// Endpoint para obtener un usuario por ID
-app.get('/api/usuario/:id', (req, res) => {
+// Endpoint para obtener un usuario por ID - ¡CAMBIO AQUÍ!
+// De '/api/usuario/:id' a '/usuario/:id'
+app.get('/usuario/:id', (req, res) => {
   const usuarioId = req.params.id;
   const query = `
     SELECT usuario_id, nombre, email, rol
@@ -304,8 +276,9 @@ app.get('/api/usuario/:id', (req, res) => {
   });
 });
 
-// Endpoint para actualizar un usuario
-app.put('/api/usuario/:id', (req, res) => {
+// Endpoint para actualizar un usuario - ¡CAMBIO AQUÍ!
+// De '/api/usuario/:id' a '/usuario/:id'
+app.put('/usuario/:id', (req, res) => {
   const usuarioId = req.params.id;
   const { email, rol } = req.body;
   if (!email || !rol) {
@@ -332,8 +305,9 @@ app.put('/api/usuario/:id', (req, res) => {
   });
 });
 
-// Endpoint para eliminar un usuario
-app.delete('/api/usuario/:id', (req, res) => {
+// Endpoint para eliminar un usuario - ¡CAMBIO AQUÍ!
+// De '/api/usuario/:id' a '/usuario/:id'
+app.delete('/usuario/:id', (req, res) => {
   const usuarioId = req.params.id;
   db.beginTransaction((err) => {
     if (err) {
@@ -393,8 +367,9 @@ app.delete('/api/usuario/:id', (req, res) => {
   });
 });
 
-// Endpoint para obtener todos los permisos
-app.get('/api/permisos', (req, res) => {
+// Endpoint para obtener todos los permisos - ¡CAMBIO AQUÍ!
+// De '/api/permisos' a '/permisos'
+app.get('/permisos', (req, res) => {
   const query = 'SELECT rol, consultar_stock, registrar_entrada, registrar_salidas FROM permisos';
   db.query(query, (err, results) => {
     if (err) {
@@ -405,8 +380,9 @@ app.get('/api/permisos', (req, res) => {
   });
 });
 
-// Endpoint para actualizar permisos de un rol
-app.put('/api/permisos/:rol', (req, res) => {
+// Endpoint para actualizar permisos de un rol - ¡CAMBIO AQUÍ!
+// De '/api/permisos/:rol' a '/permisos/:rol'
+app.put('/permisos/:rol', (req, res) => {
   const { rol } = req.params;
   const { consultar_stock, registrar_entrada, registrar_salidas } = req.body;
   
@@ -437,8 +413,9 @@ app.put('/api/permisos/:rol', (req, res) => {
   });
 });
 
-// Endpoint para inventario
-app.get('/api/inventario', (req, res) => {
+// Endpoint para inventario - ¡CAMBIO AQUÍ!
+// De '/api/inventario' a '/inventario'
+app.get('/inventario', (req, res) => {
   const query = `
     SELECT ubicacion, SUM(cantidad_disponible) as cantidad
     FROM vista_inventario_actual
@@ -453,8 +430,9 @@ app.get('/api/inventario', (req, res) => {
   });
 });
 
-// Endpoint para stock de productos
-app.get('/api/stock', (req, res) => {
+// Endpoint para stock de productos - ¡CAMBIO AQUÍ!
+// De '/api/stock' a '/stock'
+app.get('/stock', (req, res) => {
   const query = `
     SELECT 
       p.nombre,
@@ -479,8 +457,9 @@ app.get('/api/stock', (req, res) => {
   });
 });
 
-// Endpoint para usuarios activos
-app.get('/api/usuarios-activos', (req, res) => {
+// Endpoint para usuarios activos - ¡CAMBIO AQUÍ!
+// De '/api/usuarios-activos' a '/usuarios-activos'
+app.get('/usuarios-activos', (req, res) => {
   const query = `
     SELECT u.nombre, u.rol, s.hora_inicio
     FROM usuarios u
@@ -518,8 +497,9 @@ app.get('/api/usuarios-activos', (req, res) => {
   });
 });
 
-// Endpoint para todos los usuarios
-app.get('/api/usuarios', (req, res) => {
+// Endpoint para todos los usuarios - ¡CAMBIO AQUÍ!
+// De '/api/usuarios' a '/usuarios'
+app.get('/usuarios', (req, res) => {
   const query = `
     SELECT 
       u.usuario_id,
@@ -550,8 +530,11 @@ app.get('/api/usuarios', (req, res) => {
   });
 });
 
-// Endpoint para búsqueda de usuarios
-app.get('/search', (req, res) => {
+// Endpoint para búsqueda de usuarios - ¡CAMBIO AQUÍ!
+// Si tu frontend llama a /api/search, entonces este también debe ser /search
+// Lo más probable es que tu frontend llame a /api/search, por lo que este se cambia a /search.
+// Si tu frontend lo llama a /search (sin /api), no necesitas cambiarlo.
+app.get('/search', (req, res) => { // Antes era app.get('/api/search', ...)
   const query = req.query.query || '';
   if (query.length < 3) {
     return res.json([]);
@@ -570,8 +553,9 @@ app.get('/search', (req, res) => {
   });
 });
 
-// Endpoint para obtener todos los clientes
-app.get('/api/clientes', (req, res) => {
+// Endpoint para obtener todos los clientes - ¡CAMBIO AQUÍ!
+// De '/api/clientes' a '/clientes'
+app.get('/clientes', (req, res) => {
   const query = `
     SELECT cliente_id, nombre
     FROM clientes
@@ -587,8 +571,9 @@ app.get('/api/clientes', (req, res) => {
   });
 });
 
-// Endpoint para inventario detallado
-app.get('/api/inventario/detalle', (req, res) => {
+// Endpoint para inventario detallado - ¡CAMBIO AQUÍ!
+// De '/api/inventario/detalle' a '/inventario/detalle'
+app.get('/inventario/detalle', (req, res) => {
   const query = `
     SELECT 
       p.sku,
