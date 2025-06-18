@@ -6,7 +6,7 @@
   <title>Administrador</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600&display=Poppins" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
   <style>
     body {
@@ -26,425 +26,1525 @@
       padding: 20px 40px;
       background-color: #ffffff;
       border-bottom: 1px solid #ccc;
+      position: relative;
     }
-    .header-left, .header-right {
+    .user-info {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
     }
-    .header h1 {
-      margin: 0;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      color: #333;
+    .user-info img {
+      width: 40px;
+      height: 40px;
     }
-    .header-button {
-      background-color: #e05576;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
+    .user-info span {
       font-size: 16px;
+      font-weight: 600;
     }
-    .header-button:hover {
-      background-color: #b33c5e;
+    .search-bar {
+      flex: 1;
+      max-width: 450px;
+      margin: 0 40px;
+      position: relative;
     }
-    .sidebar {
-      width: 250px;
-      background-color: #f8f8f8;
-      padding: 20px;
-      border-right: 1px solid #eee;
-      position: sticky; /* Sticky para que se quede si hay scroll */
-      top: 0;
-      height: calc(100vh - 40px); /* Ajustar altura para que no se salga del body */
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .sidebar-nav button {
-      background-color: #e05576;
-      color: white;
-      border: none;
-      padding: 12px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
+    .search-bar input {
       width: 100%;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      padding: 12px 12px 12px 45px;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
     }
-    .sidebar-nav button:hover {
-      background-color: #b33c5e;
-    }
-    .sidebar-nav button img {
+    .search-bar img {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 20px;
       height: 20px;
     }
-    .sidebar h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px;
-      color: #333;
-      margin-top: 0;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .main-content {
-      flex-grow: 1;
-      padding: 20px 40px;
-      overflow-y: auto;
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .icons {
+      display: flex;
       gap: 20px;
-      margin-bottom: 30px;
+      position: absolute;
+      right: 180px;
+      top: 25px;
+      z-index: 10;
     }
-    .stat-card {
-      background-color: #fff;
-      padding: 20px;
+    .icons img {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+    .container {
+      display: flex;
+      flex: 1;
+      margin: 30px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-align: center;
+      overflow: hidden;
+      align-items: flex-start;
+    }
+    .menu {
+      width: 180px;
+      background-color: #d7d2cb;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
+      border-right: none;
     }
-    .stat-card h3 {
-      margin-top: 0;
-      color: #e05576;
-      font-size: 24px;
-      font-family: 'Bebas Neue', sans-serif;
+    .menu-items {
+      background-color: #f8f8f8;
+      padding: 20px 0;
     }
-    .stat-card p {
-      margin-bottom: 0;
-      color: #555;
-      font-size: 16px;
+    .menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
-    .charts-container {
+    .menu li {
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 30px;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-bottom: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
     }
-    .chart-card {
-      background-color: #fff;
-      padding: 20px;
+    .menu li img {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .menu li:last-child {
+      border-bottom: none;
+    }
+    .menu li:hover {
+      background-color: #e05576;
+      color: white;
+      border-radius: 4px;
+    }
+    .menu li.active {
+      background-color: #e05576;
+      color: white;
+      border-radius: 4px;
+    }
+    .logout-button {
+      background-color: #e05576;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+      margin: 10px 20px 0 20px;
+    }
+    .logout-button:hover {
+      background-color: #b33c5e;
+    }
+    .content {
       flex: 1;
-      min-width: 400px; /* Asegura un ancho mínimo para escritorio */
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #ffffff;
+      margin: 0;
     }
-    .product-management {
-      background-color: #fff;
+    .content h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      margin: 0 0 10px;
+    }
+    .content h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin: 20px 0 10px;
+    }
+    .content p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    .chart-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      margin: 0 0 10px;
+      text-align: left;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      text-align: center;
+    }
+    .modal-content h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin: 0 0 15px;
+    }
+    .modal-content img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+    }
+    .modal-content p {
+      font-size: 16px;
+      margin: 0 0 15px;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #000000;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 650px;
+      margin: 20px 0 0 0;
+      min-height: 300px;
+    }
+    .update-button {
+      background-color: #e05576;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      border-radius: 8px;
+      display: block;
+      margin: 10px auto;
+    }
+    .update-button:hover {
+      background-color: #b33c5e;
+    }
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 0;
+      align-items: start;
+    }
+    .chart-grid-item {
+      grid-column: 1 / 2;
+      display: block;
+    }
+    .stock-container {
+      grid-column: 2 / 3;
+      background-color: #f8f8f8;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .product-management h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 28px;
-      color: #333;
+      max-width: 650px;
       margin-top: 0;
+      display: block;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .users-table-container, .permisos-table-container, .inventario-table-container {
+      grid-column: 1 / 3;
+      margin-top: 20px;
+      max-width: 100%;
+      display: block;
+    }
+    .error-message {
+      color: #e05576;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
+    .users-table, .permisos-table, .inventario-table, .auditoria-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+    }
+    .users-table th, .users-table td, .permisos-table th, .permisos-table td, .inventario-table th, .inventario-table td, .auditoria-table th, .auditoria-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    .users-table th, .permisos-table th, .inventario-table th, .auditoria-table th {
+      background-color: #f8f8f8;
+      font-weight: 600;
+    }
+    .users-table tr:nth-child(even), .permisos-table tr:nth-child(even), .inventario-table tr:nth-child(even), .auditoria-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .delete-icon {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+    }
+    .permisos-table .no-permiso {
+      color: #e05576;
+    }
+    .stock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
     }
-    .product-management button {
+    .stock-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin: 0;
+    }
+    .view-more-button {
+      background-color: #e05576;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+    .view-more-button:hover {
+      background-color: #b33c5e;
+    }
+    .stock-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .stock-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .stock-item div {
+      flex: 1;
+    }
+    .stock-item-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .stock-item-percentage {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      color: #555;
+      margin: 5px 0 0;
+    }
+    .stock-error {
+      color: #e05576;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .product-card p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    .product-card .product-name {
+      font-weight: 600;
+    }
+    .product-card .product-percentage {
+      font-size: 12px;
+      color: #555;
+    }
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .action-button {
       background-color: #e05576;
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
-      margin-bottom: 20px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      border-radius: 8px;
+      margin: 0 25px;
     }
-    .product-management button:hover {
+    .action-button:hover {
       background-color: #b33c5e;
     }
-    .product-management table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
+    .action-button.active {
+      background-color: #b33c5e;
     }
-    .product-management th, .product-management td {
-      border: 1px solid #ddd;
-      padding: 8px;
+    .modal-content label {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      margin: 10px 0 5px;
       text-align: left;
     }
-    .product-management th {
-      background-color: #f2f2f2;
-      font-weight: 600;
-      color: #555;
-    }
-    .product-management .actions button {
-      background: none;
-      border: none;
-      color: #e05576;
-      cursor: pointer;
+    .modal-content select, .modal-content input[type="email"], .modal-content input[type="text"], .modal-content input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
       font-size: 14px;
-      padding: 5px;
-      margin: 0 5px;
     }
-    .product-management .actions button:hover {
-      text-decoration: underline;
+    .modal-content input[type="email"], .modal-content input[type="text"], .modal-content input[type="password"] {
+      background-color: #f9f9f9;
     }
-    .footer {
-      background-color: #333;
-      color: white;
-      padding: 20px 40px;
-      text-align: center;
-      margin-top: auto;
+    .modal-content .radio-group {
+      margin: 15px 0;
+      text-align: left;
     }
-    .back-button {
+    .modal-content .radio-group label {
+      display: inline-block;
+      margin-right: 20px;
+    }
+    .modal-content .radio-group input[type="radio"] {
+      margin-right: 5px;
+    }
+    .modal-content .save-button {
       background-color: #e05576;
       color: white;
       border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
+      padding: 10px 20px;
       cursor: pointer;
+      font-family: 'Poppins', sans-serif;
       font-size: 14px;
-      margin-bottom: 20px;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
+      border-radius: 8px;
+      display: block;
+      margin: 20px auto 0;
     }
-    .back-button:hover {
+    .modal-content .save-button:hover {
       background-color: #b33c5e;
+    }
+    .modal-content .accept-button, .modal-content .cancel-button {
+      background-color: #e05576;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      border-radius: 8px;
+      margin: 10px 5px;
+    }
+    .modal-content .cancel-button {
+      background-color: #ccc;
+      color: #000;
+    }
+    .modal-content .accept-button:hover {
+      background-color: #b33c5e;
+    }
+    .modal-content .cancel-button:hover {
+      background-color: #aaa;
+    }
+    .permisos-table-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin: 20px 0 10px;
+    }
+    .permisos-edit-button {
+      background-color: #e05576;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .permisos-edit-button:hover {
+      background-color: #b33c5e;
+    }
+    .modal-content .checkbox-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+    .modal-content .checkbox-group label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .modal-content .checkbox-group input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    .activity-section {
+      margin: 20px 0;
+    }
+    .activity-section h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #f8f8f8;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .activity-item img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+    .activity-item p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .activity-time {
+      font-size: 12px;
+      color: #555;
+      margin-left: auto;
     }
   </style>
 </head>
 <body>
+  <div id="welcomeModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">×</span>
+      <img src="https://img.icons8.com/fluent/40/000000/happy.png" alt="Icono">
+      <h2>¡Bienvenido admin!</h2>
+      <p>Estás en el panel de administración.</p>
+    </div>
+  </div>
+  <div id="productsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeProductsModal()">×</span>
+      <h2>Todos los Productos</h2>
+      <div id="productsGrid" class="products-grid"></div>
+      <div id="productsError" class="error-message">Error al cargar productos en el modal.</div>
+    </div>
+  </div>
+  <div id="editUserModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeEditUserModal()">×</span>
+      <h2>Editar usuario</h2>
+      <label for="userSelect">Nombre del usuario</label>
+      <select id="userSelect" onchange="loadUserData()">
+        <option value="">Seleccione un usuario</option>
+      </select>
+      <label for="userEmail">Correo</label>
+      <input type="email" id="userEmail" readonly>
+      <label>Rol</label>
+      <div class="radio-group">
+        <label><input type="radio" name="rol" value="admin"> Admin</label>
+        <label><input type="radio" name="rol" value="contador"> Contador</label>
+        <label><input type="radio" name="rol" value="cajero"> Cajero</label>
+        <label><input type="radio" name="rol" value="logistica"> Logística</label>
+      </div>
+      <button class="save-button" onclick="saveUserChanges()">Guardar Cambios</button>
+    </div>
+  </div>
+  <div id="createUserModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeCreateUserModal()">×</span>
+      <h2>Nuevo Usuario</h2>
+      <label for="newUserName">Nombre</label>
+      <input type="text" id="newUserName" required>
+      <label for="newUserEmail">Correo</label>
+      <input type="email" id="newUserEmail" placeholder="ej.nombre_usuario@papelera.com" oninput="updateEmailDisplay()" required>
+      <label for="newUserPassword">Contraseña</label>
+      <input type="password" id="newUserPassword" required>
+      <label for="newUserRol">Rol</label>
+      <select id="newUserRol" required>
+        <option value="">Seleccione un rol</option>
+        <option value="admin">Admin</option>
+        <option value="cajero">Cajero</option>
+        <option value="logistica">Logística</option>
+        <option value="contador">Contador</option>
+      </select>
+      <button class="save-button" onclick="saveNewUser()">Guardar</button>
+    </div>
+  </div>
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeSuccessModal()">×</span>
+      <h2>Éxito</h2>
+      <p>Los cambios se realizaron exitosamente.</p>
+      <button class="accept-button" onclick="closeSuccessModal()">Aceptar</button>
+    </div>
+  </div>
+  <div id="deleteConfirmModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeDeleteConfirmModal()">×</span>
+      <h2>AVISO</h2>
+      <p id="deleteConfirmMessage">¿Estás seguro de que quieres borrar este usuario?</p>
+      <button class="accept-button" onclick="confirmDelete()">Aceptar</button>
+      <button class="cancel-button" onclick="closeDeleteConfirmModal()">Cancelar</button>
+    </div>
+  </div>
+  <div id="editPermisosModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeEditPermisosModal()">×</span>
+      <h2>Editar Permisos</h2>
+      <label for="permisosRolSelect">Rol</label>
+      <select id="permisosRolSelect" onchange="loadPermisosData()">
+        <option value="">Seleccione un rol</option>
+        <option value="admin">Admin</option>
+        <option value="cajero">Cajero</option>
+        <option value="contador">Contador</option>
+        <option value="logistica">Logística</option>
+      </select>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="consultarStock"> Consultar Stock</label>
+        <label><input type="checkbox" id="registrarEntrada"> Registrar Entrada</label>
+        <label><input type="checkbox" id="registrarSalidas"> Registrar Salidas</label>
+      </div>
+      <button class="save-button" onclick="savePermisosChanges()">Guardar Cambios</button>
+    </div>
+  </div>
   <div class="header">
-    <div class="header-left">
-      <h1>Panel de Administración</h1>
+    <div class="search-bar">
+      <img src="https://img.icons8.com/ios-filled/20/000000/search--v1.png" alt="Search Icon">
+      <input type="text" id="searchInput" placeholder="Buscar...">
     </div>
-    <div class="header-right">
-      <button class="header-button" onclick="alert('Funcionalidad de Notificaciones')">
-        <img src="https://img.icons8.com/ios-filled/24/ffffff/bell.png" alt="Notificaciones"> Notificaciones
-      </button>
-      <button class="header-button" onclick="alert('Funcionalidad de Ajustes')">
-        <img src="https://img.icons8.com/ios-filled/24/ffffff/settings.png" alt="Ajustes"> Ajustes
-      </button>
-      <button class="header-button" onclick="window.location.href='index.html'">
-        <img src="https://img.icons8.com/ios-filled/24/ffffff/exit.png" alt="Cerrar Sesión"> Cerrar Sesión
-      </button>
+    <div class="icons">
+      <img src="https://img.icons8.com/ios-filled/24/000000/bell.png" alt="Notifications">
+      <img src="https://img.icons8.com/ios-filled/24/000000/settings.png" alt="Settings">
+    </div>
+    <div class="user-info">
+      <img src="https://img.icons8.com/color/40/000000/gender-neutral-user.png" alt="User Avatar">
+      <span id="userNameDisplay">Admin</span>
     </div>
   </div>
-
-  <div style="display: flex; flex: 1; width: 100%; box-sizing: border-box;">
-    <aside class="sidebar">
-      <h2>Navegación</h2>
-      <div class="sidebar-nav">
-        <button onclick="window.location.href='admin.html'">
-          <img src="https://img.icons8.com/ios-filled/20/ffffff/dashboard.png" alt="Dashboard"> Dashboard
-        </button>
-        <button onclick="alert('Ir a Gestión de Productos')">
-          <img src="https://img.icons8.com/ios-filled/20/ffffff/product.png" alt="Productos"> Productos
-        </button>
-        <button onclick="alert('Ir a Gestión de Usuarios')">
-          <img src="https://img.icons8.com/ios-filled/20/ffffff/user.png" alt="Usuarios"> Usuarios
-        </button>
-        <button onclick="alert('Ir a Reportes')">
-          <img src="https://img.icons8.com/ios-filled/20/ffffff/graph.png" alt="Reportes"> Reportes
-        </button>
-        <button onclick="alert('Ir a Configuración')">
-          <img src="https://img.icons8.com/ios-filled/20/ffffff/settings.png" alt="Configuración"> Configuración
-        </button>
+  <div class="container">
+    <div class="menu">
+      <div class="menu-items">
+        <ul>
+          <li onclick="showSection('dashboard')" class="active">
+            <img src="https://img.icons8.com/ios-filled/20/000000/dashboard.png" alt="Dashboard Icon"> Dashboard
+          </li>
+          <li onclick="showSection('inventario')">
+            <img src="https://img.icons8.com/ios-filled/20/000000/warehouse.png" alt="Inventory Icon"> Inventario
+          </li>
+          <li onclick="showSection('usuarios')">
+            <img src="https://img.icons8.com/ios-filled/20/000000/group.png" alt="Users Icon"> Usuarios
+          </li>
+          <li onclick="showSection('permisos')">
+            <img src="https://img.icons8.com/ios-filled/20/000000/key.png" alt="Permissions Icon"> Permisos
+          </li>
+          <li onclick="showSection('auditoria')">
+            <img src="https://img.icons8.com/ios-filled/20/000000/audit.png" alt="Audit Icon"> Auditoría
+          </li>
+        </ul>
       </div>
-    </aside>
-
-    <main class="main-content">
-      <button class="back-button" onclick="window.location.href='index.html'">Regresar a la selección</button>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h3>Total de Ventas</h3>
-          <p>$15,200</p>
-        </div>
-        <div class="stat-card">
-          <h3>Productos en Stock</h3>
-          <p>530</p>
-        </div>
-        <div class="stat-card">
-          <h3>Nuevos Usuarios</h3>
-          <p>12</p>
-        </div>
-        <div class="stat-card">
-          <h3>Pedidos Pendientes</h3>
-          <p>7</p>
-        </div>
-      </div>
-
-      <div class="charts-container">
-        <div class="chart-card">
-          <h2>Ventas por Mes</h2>
-          <canvas id="salesChart"></canvas>
-        </div>
-        <div class="chart-card">
-          <h2>Movimientos de Inventario</h2>
-          <canvas id="inventoryChart"></canvas>
+      <button class="logout-button" onclick="logout()">Cerrar Sesión</button>
+    </div>
+    <div class="content">
+      <div id="dashboard" class="content-section active">
+        <h2>Dashboard</h2>
+        <div class="content-grid">
+          <div class="chart-grid-item">
+            <div class="chart-container">
+              <canvas id="lineChart"></canvas>
+            </div>
+            <button class="update-button" onclick="updateChart()">Actualizar Gráfico</button>
+          </div>
+          <div class="stock-container">
+            <div class="stock-header">
+              <h3 class="stock-title">Stock Bajo</h3>
+              <button class="view-more-button" onclick="openProductsModal()">Ver Más</button>
+            </div>
+            <div id="stockList">
+              </div>
+            <p id="stockError" class="stock-error">Error al cargar productos.</p>
+          </div>
         </div>
       </div>
 
-      <div class="product-management">
-        <h2>Gestión de Productos</h2>
-        <button onclick="alert('Abrir formulario para añadir producto')">Añadir Nuevo Producto</button>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>001</td>
-              <td>Cuaderno A4</td>
-              <td>Papelería</td>
-              <td>$25.00</td>
-              <td>150</td>
-              <td>Activo</td>
-              <td class="actions">
-                <button>Editar</button>
-                <button>Eliminar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>002</td>
-              <td>Lápices (Caja x12)</td>
-              <td>Escritura</td>
-              <td>$45.00</td>
-              <td>80</td>
-              <td>Activo</td>
-              <td class="actions">
-                <button>Editar</button>
-                <button>Eliminar</button>
-              </td>
-            </tr>
-            <tr>
-              <td>003</td>
-              <td>Mochila Ergonómica</td>
-              <td>Accesorios</td>
-              <td>$450.00</td>
-              <td>30</td>
-              <td>Activo</td>
-              <td class="actions">
-                <button>Editar</button>
-                <button>Eliminar</button>
-              </td>
-            </tr>
-            </tbody>
-        </table>
+      <div id="inventario" class="content-section">
+        <h2>Inventario</h2>
+        <div class="action-buttons">
+          <button class="action-button active" onclick="showInventorySection('entradas')">Registrar Entradas</button>
+          <button class="action-button" onclick="showInventorySection('salidas')">Registrar Salidas</button>
+        </div>
+        <div id="entradasSection" class="inventory-subsection active">
+          <h3>Registrar Entrada de Producto</h3>
+          <form id="entradaForm">
+            <label for="entradaProducto">Producto:</label>
+            <select id="entradaProducto" required></select>
+            <label for="entradaCantidad">Cantidad:</label>
+            <input type="number" id="entradaCantidad" min="1" required>
+            <label for="entradaFecha">Fecha:</label>
+            <input type="date" id="entradaFecha" required>
+            <button type="submit" class="save-button">Guardar Entrada</button>
+            <p id="entradaError" class="error-message">Error al registrar entrada.</p>
+          </form>
+        </div>
+        <div id="salidasSection" class="inventory-subsection">
+          <h3>Registrar Salida de Producto</h3>
+          <form id="salidaForm">
+            <label for="salidaProducto">Producto:</label>
+            <select id="salidaProducto" required></select>
+            <label for="salidaCantidad">Cantidad:</label>
+            <input type="number" id="salidaCantidad" min="1" required>
+            <label for="salidaFecha">Fecha:</label>
+            <input type="date" id="salidaFecha" required>
+            <button type="submit" class="save-button">Guardar Salida</button>
+            <p id="salidaError" class="error-message">Error al registrar salida.</p>
+          </form>
+        </div>
+        <div class="inventario-table-container">
+          <h3>Inventario Actual</h3>
+          <table class="inventario-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Stock</th>
+              </tr>
+            </thead>
+            <tbody id="inventarioTableBody">
+              </tbody>
+          </table>
+          <p id="inventarioError" class="error-message">Error al cargar inventario.</p>
+        </div>
       </div>
-    </main>
-  </div>
 
-  <div class="footer">
-    <p>&copy; 2024 Papelería. Todos los derechos reservados.</p>
+      <div id="usuarios" class="content-section">
+        <h2>Usuarios</h2>
+        <button class="update-button" onclick="openCreateUserModal()">Crear Nuevo Usuario</button>
+        <button class="update-button" onclick="openEditUserModal()">Editar Usuario Existente</button>
+        <div class="users-table-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              </tbody>
+          </table>
+          <p id="usersError" class="error-message">Error al cargar usuarios.</p>
+        </div>
+      </div>
+
+      <div id="permisos" class="content-section">
+        <h2>Permisos</h2>
+        <button class="permisos-edit-button" onclick="openEditPermisosModal()">Editar Permisos por Rol</button>
+        <div class="permisos-table-container">
+          <h3 class="permisos-table-title">Permisos Actuales</h3>
+          <table class="permisos-table">
+            <thead>
+              <tr>
+                <th>Rol</th>
+                <th>Consultar Stock</th>
+                <th>Registrar Entrada</th>
+                <th>Registrar Salidas</th>
+              </tr>
+            </thead>
+            <tbody id="permisosTableBody">
+              </tbody>
+          </table>
+          <p id="permisosError" class="error-message">Error al cargar permisos.</p>
+        </div>
+      </div>
+
+      <div id="auditoria" class="content-section">
+        <h2>Auditoría</h2>
+        <div class="auditoria-table-container">
+          <table class="auditoria-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Acción</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+            <tbody id="auditoriaTableBody">
+              </tbody>
+          </table>
+          <p id="auditoriaError" class="error-message">Error al cargar la auditoría.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Datos de ejemplo para los gráficos
-    const salesData = {
-      labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Ventas Mensuales',
-        data: [1200, 1500, 1000, 1800, 2000, 1600],
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: '#FF6384',
-        borderWidth: 1,
-        fill: true,
-        tension: 0.3
-      }]
-    };
+    // Variables globales para Chart.js
+    let lineChart;
 
-    const inventoryData = [
-      { dia: 'Día 1', movimientos: 10 },
-      { dia: 'Día 2', movimientos: 15 },
-      { dia: 'Día 3', movimientos: 8 },
-      { dia: 'Día 4', movimientos: 20 },
-      { dia: 'Día 5', movimientos: 12 },
-      { dia: 'Día 6', movimientos: 25 },
-      { dia: 'Día 7', movimientos: 18 }
-    ];
+    // Función para mostrar secciones
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
 
-    // Gráfico de Ventas
-    const salesCtx = document.getElementById('salesChart').getContext('2d');
-    new Chart(salesCtx, {
-      type: 'bar',
-      data: salesData,
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { font: { size: 14, family: 'Poppins' } }
-          },
-          x: {
-            ticks: { font: { size: 12, family: 'Poppins' } }
+      document.querySelectorAll('.menu li').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.querySelector(`.menu li[onclick="showSection('${sectionId}')"]`).classList.add('active');
+
+      // Cargar datos específicos de la sección
+      if (sectionId === 'dashboard') {
+        fetchInventoryMovementData();
+        fetchLowStockProducts();
+      } else if (sectionId === 'inventario') {
+        fetchProductsForInventoryForms();
+        fetchCurrentInventory();
+      } else if (sectionId === 'usuarios') {
+        fetchUsers();
+      } else if (sectionId === 'permisos') {
+        fetchPermisos();
+      } else if (sectionId === 'auditoria') {
+        fetchAuditoria();
+      }
+    }
+
+    // Funciones de modales
+    function openModal() {
+      document.getElementById('welcomeModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('welcomeModal').classList.remove('show');
+    }
+
+    // Función para abrir el modal de todos los productos
+    async function openProductsModal() {
+      document.getElementById('productsModal').classList.add('show');
+      await fetchAllProducts();
+    }
+
+    function closeProductsModal() {
+      document.getElementById('productsModal').classList.remove('show');
+    }
+
+    // Modal de Editar Usuario
+    async function openEditUserModal() {
+      document.getElementById('editUserModal').classList.add('show');
+      await loadUsersForEdit();
+    }
+
+    function closeEditUserModal() {
+      document.getElementById('editUserModal').classList.remove('show');
+      document.getElementById('editUserModal').querySelector('form').reset();
+      document.getElementById('userSelect').innerHTML = '<option value="">Seleccione un usuario</option>';
+      document.getElementById('userEmail').value = '';
+    }
+
+    // Modal de Crear Usuario
+    function openCreateUserModal() {
+      document.getElementById('createUserModal').classList.add('show');
+    }
+
+    function closeCreateUserModal() {
+      document.getElementById('createUserModal').classList.remove('show');
+      document.getElementById('createUserModal').querySelector('form').reset();
+    }
+
+    // Modal de Éxito
+    function openSuccessModal(message) {
+      document.getElementById('successModal').classList.add('show');
+      document.querySelector('#successModal p').innerText = message;
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.remove('show');
+    }
+
+    // Modal de Confirmación de Borrado
+    let userIdToDelete = null;
+
+    function openDeleteConfirmModal(userId) {
+      userIdToDelete = userId;
+      document.getElementById('deleteConfirmModal').classList.add('show');
+      document.getElementById('deleteConfirmMessage').innerText = `¿Estás seguro de que quieres borrar al usuario con ID: ${userId}?`;
+    }
+
+    function closeDeleteConfirmModal() {
+      userIdToDelete = null;
+      document.getElementById('deleteConfirmModal').classList.remove('show');
+    }
+
+    // Modal de Editar Permisos
+    async function openEditPermisosModal() {
+      document.getElementById('editPermisosModal').classList.add('show');
+      document.getElementById('permisosRolSelect').value = ''; // Reset select
+      document.getElementById('consultarStock').checked = false;
+      document.getElementById('registrarEntrada').checked = false;
+      document.getElementById('registrarSalidas').checked = false;
+    }
+
+    function closeEditPermisosModal() {
+      document.getElementById('editPermisosModal').classList.remove('show');
+    }
+
+    // Cierre de modales al hacer clic fuera
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target == modal) {
+          modal.classList.remove('show');
+          // Reset specific forms if needed
+          if (modal.id === 'editUserModal') {
+            document.getElementById('editUserModal').querySelector('form').reset();
+            document.getElementById('userSelect').innerHTML = '<option value="">Seleccione un usuario</option>';
+            document.getElementById('userEmail').value = '';
+          } else if (modal.id === 'createUserModal') {
+            document.getElementById('createUserModal').querySelector('form').reset();
+          } else if (modal.id === 'deleteConfirmModal') {
+            userIdToDelete = null;
           }
-        },
-        plugins: {
-          legend: { display: true, position: 'top', labels: { color: '#333333' } },
-          title: { display: true, text: 'Ventas Mensuales', color: '#333333', font: { size: 16 } }
         }
+      });
+    }
+
+    // Manejo de secciones de Inventario
+    function showInventorySection(section) {
+      document.querySelectorAll('.inventory-subsection').forEach(s => s.classList.remove('active'));
+      document.getElementById(`${section}Section`).classList.add('active');
+
+      document.querySelectorAll('.action-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.action-button[onclick="showInventorySection('${section}')"]`).classList.add('active');
+    }
+
+    // API Calls (Simuladas - Reemplazar con llamadas reales a tu backend)
+
+    // Dashboard - Movimientos de Inventario
+    async function fetchInventoryMovementData() {
+      console.log('Fetching inventory movement data...');
+      document.getElementById('lineChart').style.display = 'block'; // Asegúrate de que el canvas esté visible
+      try {
+        // Simulación de datos de movimientos de inventario por día
+        const data = [
+          { dia: 'Día 1', movimientos: 10 },
+          { dia: 'Día 2', movimientos: 15 },
+          { dia: 'Día 3', movimientos: 7 },
+          { dia: 'Día 4', movimientos: 20 },
+          { dia: 'Día 5', movimientos: 12 },
+          { dia: 'Día 6', movimientos: 18 },
+          { dia: 'Día 7', movimientos: 9 }
+        ];
+        updateLineChart(data);
+      } catch (error) {
+        console.error('Error fetching inventory movement data:', error);
+        // Manejar el error, quizás mostrar un mensaje en el Dashboard
+      }
+    }
+
+    function updateLineChart(data) {
+      const ctx = document.getElementById('lineChart').getContext('2d');
+      const labels = data.map(item => item.dia);
+      const values = data.map(item => item.movimientos);
+
+      if (lineChart) lineChart.destroy();
+
+      lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Movimientos de Inventario',
+            data: values,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: '#36A2EB',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: Math.max(...values, 10) + 5, // Asegura que el eje Y tenga un rango decente
+              ticks: { stepSize: 5, font: { size: 14, family: 'Poppins' } }
+            },
+            x: {
+              ticks: { font: { size: 12, family: 'Poppins' }, maxRotation: 45, minRotation: 45 }
+            }
+          },
+          plugins: {
+            legend: { display: true, position: 'top', labels: { color: '#333333' } },
+            title: { display: true, text: 'Movimientos de Inventario (Últimos 7 Días)', color: '#333333', font: { size: 16 } }
+          }
+        }
+      });
+    }
+
+    function updateChart() {
+      // En una aplicación real, esto podría volver a llamar a fetchInventoryMovementData
+      // o a una función que obtenga datos más recientes.
+      fetchInventoryMovementData();
+      alert('Gráfico actualizado (con datos simulados).');
+    }
+
+    // Dashboard - Stock Bajo
+    async function fetchLowStockProducts() {
+      console.log('Fetching low stock products...');
+      const stockList = document.getElementById('stockList');
+      const stockError = document.getElementById('stockError');
+      stockList.innerHTML = '';
+      stockError.style.display = 'none';
+
+      try {
+        // Simulación de productos con bajo stock
+        const products = [
+          { id: 1, name: 'Lápices', stock: 5, img: 'https://img.icons8.com/color/50/000000/pencil.png' },
+          { id: 2, name: 'Cuadernos', stock: 8, img: 'https://img.icons8.com/color/50/000000/notepad.png' },
+          { id: 3, name: 'Gomas', stock: 3, img: 'https://img.icons8.com/color/50/000000/eraser.png' }
+        ];
+
+        if (products.length > 0) {
+          products.forEach(product => {
+            const item = document.createElement('div');
+            item.classList.add('stock-item');
+            item.innerHTML = `
+              <img src="${product.img}" alt="${product.name}">
+              <div>
+                <p class="stock-item-name">${product.name}</p>
+                <p class="stock-item-percentage">Stock: ${product.stock} unidades</p>
+              </div>
+            `;
+            stockList.appendChild(item);
+          });
+        } else {
+          stockList.innerHTML = '<p>No hay productos con bajo stock actualmente.</p>';
+        }
+      } catch (error) {
+        console.error('Error fetching low stock products:', error);
+        stockError.style.display = 'block';
+      }
+    }
+
+    // Modal de Todos los Productos
+    async function fetchAllProducts() {
+      console.log('Fetching all products for modal...');
+      const productsGrid = document.getElementById('productsGrid');
+      const productsError = document.getElementById('productsError');
+      productsGrid.innerHTML = '';
+      productsError.style.display = 'none';
+
+      try {
+        // Simulación de todos los productos
+        const products = [
+          { id: 1, name: 'Lápices', stock: 5, img: 'https://img.icons8.com/color/50/000000/pencil.png' },
+          { id: 2, name: 'Cuadernos', stock: 8, img: 'https://img.icons8.com/color/50/000000/notepad.png' },
+          { id: 3, name: 'Gomas', stock: 3, img: 'https://img.icons8.com/color/50/000000/eraser.png' },
+          { id: 4, name: 'Bolígrafos', stock: 50, img: 'https://img.icons8.com/color/50/000000/ballpoint-pen.png' },
+          { id: 5, name: 'Pegamento', stock: 25, img: 'https://img.icons8.com/color/50/000000/glue.png' },
+          { id: 6, name: 'Tijeras', stock: 15, img: 'https://img.icons8.com/color/50/000000/scissors.png' }
+        ];
+
+        if (products.length > 0) {
+          products.forEach(product => {
+            const card = document.createElement('div');
+            card.classList.add('product-card');
+            card.innerHTML = `
+              <img src="${product.img}" alt="${product.name}">
+              <p class="product-name">${product.name}</p>
+              <p class="product-percentage">Stock: ${product.stock} unidades</p>
+            `;
+            productsGrid.appendChild(card);
+          });
+        } else {
+          productsGrid.innerHTML = '<p>No hay productos registrados.</p>';
+        }
+      } catch (error) {
+        console.error('Error fetching all products:', error);
+        productsError.style.display = 'block';
+      }
+    }
+
+    // Inventario - Cargar productos en select
+    async function fetchProductsForInventoryForms() {
+      console.log('Fetching products for inventory forms...');
+      const entradaProductoSelect = document.getElementById('entradaProducto');
+      const salidaProductoSelect = document.getElementById('salidaProducto');
+      entradaProductoSelect.innerHTML = '<option value="">Selecciona un producto</option>';
+      salidaProductoSelect.innerHTML = '<option value="">Selecciona un producto</option>';
+
+      try {
+        // Simulación de productos
+        const products = [
+          { id: 1, name: 'Lápices' },
+          { id: 2, name: 'Cuadernos' },
+          { id: 3, name: 'Gomas' },
+          { id: 4, name: 'Bolígrafos' },
+          { id: 5, name: 'Pegamento' }
+        ];
+
+        products.forEach(product => {
+          const option1 = document.createElement('option');
+          option1.value = product.id;
+          option1.textContent = product.name;
+          entradaProductoSelect.appendChild(option1);
+
+          const option2 = document.createElement('option');
+          option2.value = product.id;
+          option2.textContent = product.name;
+          salidaProductoSelect.appendChild(option2);
+        });
+      } catch (error) {
+        console.error('Error fetching products for forms:', error);
+      }
+    }
+
+    // Inventario - Registrar Entrada
+    document.getElementById('entradaForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const productoId = document.getElementById('entradaProducto').value;
+      const cantidad = document.getElementById('entradaCantidad').value;
+      const fecha = document.getElementById('entradaFecha').value;
+      const entradaError = document.getElementById('entradaError');
+      entradaError.style.display = 'none';
+
+      if (!productoId || !cantidad || !fecha) {
+        entradaError.innerText = 'Por favor, completa todos los campos.';
+        entradaError.style.display = 'block';
+        return;
+      }
+
+      try {
+        // Simulación de registro de entrada
+        console.log(`Registrando entrada: Producto ID ${productoId}, Cantidad ${cantidad}, Fecha ${fecha}`);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de API
+        openSuccessModal('Entrada de producto registrada (simulado).');
+        document.getElementById('entradaForm').reset();
+        fetchCurrentInventory(); // Actualizar tabla de inventario
+      } catch (error) {
+        console.error('Error al registrar entrada:', error);
+        entradaError.innerText = 'Error al registrar entrada (simulado).';
+        entradaError.style.display = 'block';
       }
     });
 
-    // Gráfico de Movimientos de Inventario
-    const inventoryCtx = document.getElementById('inventoryChart').getContext('2d');
-    let lineChart; // Declarar aquí para poder destruirlo
+    // Inventario - Registrar Salida
+    document.getElementById('salidaForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const productoId = document.getElementById('salidaProducto').value;
+      const cantidad = document.getElementById('salidaCantidad').value;
+      const fecha = document.getElementById('salidaFecha').value;
+      const salidaError = document.getElementById('salidaError');
+      salidaError.style.display = 'none';
 
-    function updateInventoryChart() {
-        const labels = inventoryData.map(item => item.dia);
-        const values = inventoryData.map(item => item.movimientos);
+      if (!productoId || !cantidad || !fecha) {
+        salidaError.innerText = 'Por favor, completa todos los campos.';
+        salidaError.style.display = 'block';
+        return;
+      }
 
-        if (lineChart) lineChart.destroy(); // Destruir instancia anterior si existe
+      try {
+        // Simulación de registro de salida
+        console.log(`Registrando salida: Producto ID ${productoId}, Cantidad ${cantidad}, Fecha ${fecha}`);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de API
+        openSuccessModal('Salida de producto registrada (simulado).');
+        document.getElementById('salidaForm').reset();
+        fetchCurrentInventory(); // Actualizar tabla de inventario
+      } catch (error) {
+        console.error('Error al registrar salida:', error);
+        salidaError.innerText = 'Error al registrar salida (simulado).';
+        salidaError.style.display = 'block';
+      }
+    });
 
-        lineChart = new Chart(inventoryCtx, {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Movimientos de Inventario',
-              data: values,
-              backgroundColor: 'rgba(54, 162, 235, 0.2)',
-              borderColor: '#36A2EB',
-              borderWidth: 2,
-              fill: true,
-              tension: 0.1
-            }]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true,
-                max: Math.max(...values, 10) + 5,
-                ticks: { stepSize: 5, font: { size: 14, family: 'Poppins' } }
-              },
-              x: {
-                ticks: { font: { size: 12, family: 'Poppins' }, maxRotation: 45, minRotation: 45 }
-              }
-            },
-            plugins: {
-              legend: { display: true, position: 'top', labels: { color: '#333333' } },
-              title: { display: true, text: 'Movimientos de Inventario (Últimos 7 Días)', color: '#333333', font: { size: 16 } }
-            }
-          }
-        });
+    // Inventario - Cargar Inventario Actual
+    async function fetchCurrentInventory() {
+      console.log('Fetching current inventory...');
+      const inventarioTableBody = document.getElementById('inventarioTableBody');
+      const inventarioError = document.getElementById('inventarioError');
+      inventarioTableBody.innerHTML = '';
+      inventarioError.style.display = 'none';
+
+      try {
+        // Simulación de inventario actual
+        const inventory = [
+          { id: 1, name: 'Lápices', stock: 45 },
+          { id: 2, name: 'Cuadernos', stock: 120 },
+          { id: 3, name: 'Gomas', stock: 80 },
+          { id: 4, name: 'Bolígrafos', stock: 200 },
+          { id: 5, name: 'Pegamento', stock: 60 }
+        ];
+
+        if (inventory.length > 0) {
+          inventory.forEach(item => {
+            const row = inventarioTableBody.insertRow();
+            row.innerHTML = `
+              <td>${item.id}</td>
+              <td>${item.name}</td>
+              <td>${item.stock}</td>
+            `;
+          });
+        } else {
+          inventarioTableBody.innerHTML = '<tr><td colspan="3">No hay productos en inventario.</td></tr>';
+        }
+      } catch (error) {
+        console.error('Error fetching current inventory:', error);
+        inventarioError.style.display = 'block';
+      }
     }
 
-    updateInventoryChart(); // Llamar al inicio para renderizar el gráfico
+    // Usuarios - Cargar usuarios
+    async function fetchUsers() {
+      console.log('Fetching users...');
+      const usersTableBody = document.getElementById('usersTableBody');
+      const usersError = document.getElementById('usersError');
+      usersTableBody.innerHTML = '';
+      usersError.style.display = 'none';
+
+      try {
+        // Simulación de usuarios
+        const users = [
+          { id: 1, name: 'Admin Principal', email: 'admin@papeleria.com', rol: 'admin' },
+          { id: 2, name: 'Laura Contadora', email: 'laura@papeleria.com', rol: 'contador' },
+          { id: 3, name: 'Pedro Logística', email: 'pedro@papeleria.com', rol: 'logistica' },
+          { id: 4, name: 'Ana Cajera', email: 'ana@papeleria.com', rol: 'cajero' }
+        ];
+
+        if (users.length > 0) {
+          users.forEach(user => {
+            const row = usersTableBody.insertRow();
+            row.innerHTML = `
+              <td>${user.id}</td>
+              <td>${user.name}</td>
+              <td>${user.email}</td>
+              <td>${user.rol}</td>
+              <td>
+                <img src="https://img.icons8.com/ios-filled/20/000000/delete-forever.png" alt="Delete" class="delete-icon" onclick="openDeleteConfirmModal(${user.id})">
+              </td>
+            `;
+          });
+        } else {
+          usersTableBody.innerHTML = '<tr><td colspan="5">No hay usuarios registrados.</td></tr>';
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        usersError.style.display = 'block';
+      }
+    }
+
+    // Usuarios - Cargar usuarios para edición
+    async function loadUsersForEdit() {
+      console.log('Loading users for edit modal...');
+      const userSelect = document.getElementById('userSelect');
+      userSelect.innerHTML = '<option value="">Seleccione un usuario</option>';
+
+      try {
+        // Simulación de usuarios
+        const users = [
+          { id: 1, name: 'Admin Principal', email: 'admin@papeleria.com', rol: 'admin' },
+          { id: 2, name: 'Laura Contadora', email: 'laura@papeleria.com', rol: 'contador' },
+          { id: 3, name: 'Pedro Logística', email: 'pedro@papeleria.com', rol: 'logistica' },
+          { id: 4, name: 'Ana Cajera', email: 'ana@papeleria.com', rol: 'cajero' }
+        ];
+
+        users.forEach(user => {
+          const option = document.createElement('option');
+          option.value = user.id;
+          option.textContent = user.name;
+          option.dataset.email = user.email;
+          option.dataset.rol = user.rol;
+          userSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading users for edit:', error);
+      }
+    }
+
+    function loadUserData() {
+      const userSelect = document.getElementById('userSelect');
+      const selectedOption = userSelect.options[userSelect.selectedIndex];
+      const userEmail = document.getElementById('userEmail');
+      const rolRadios = document.querySelectorAll('#editUserModal input[name="rol"]');
+
+      if (selectedOption.value) {
+        userEmail.value = selectedOption.dataset.email;
+        const userRol = selectedOption.dataset.rol;
+        rolRadios.forEach(radio => {
+          radio.checked = (radio.value === userRol);
+        });
+      } else {
+        userEmail.value = '';
+        rolRadios.forEach(radio => {
+          radio.checked = false;
+        });
+      }
+    }
+
+    async function saveUserChanges() {
+      const userSelect = document.getElementById('userSelect');
+      const userId = userSelect.value;
+      const selectedRol = document.querySelector('#editUserModal input[name="rol"]:checked');
+
+      if (!userId || !selectedRol) {
+        alert('Por favor, selecciona un usuario y un rol.');
+        return;
+      }
+
+      const rol = selectedRol.value;
+
+      try {
+        // Simulación de guardar cambios de usuario
+        console.log(`Guardando cambios para Usuario ID ${userId}: Nuevo Rol ${rol}`);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de API
+        openSuccessModal('Cambios de usuario guardados (simulado).');
+        closeEditUserModal();
+        fetchUsers(); // Recargar tabla de usuarios
+      } catch (error) {
+        console.error('Error al guardar cambios de usuario:', error);
+        alert('Error al guardar cambios de usuario (simulado).');
+      }
+    }
+
+    // Usuarios - Crear Nuevo Usuario
+    function updateEmailDisplay() {
+      const emailInput = document.getElementById('newUserEmail');
+      const emailValue = emailInput.value;
+      if (!emailValue.endsWith('@papelera.com')) {
+        // This is a placeholder, in a real app, you might just enforce it on submission
+        // or have separate input for domain.
+      }
+    }
+
+    async function saveNewUser() {
+      const newUserName = document.getElementById('newUserName').value.trim();
+      const newUserEmailPrefix = document.getElementById('newUserEmail').value.trim();
+      const newUserPassword = document.getElementById('newUserPassword').value.trim();
+      const newUserRol = document.getElementById('newUserRol').value;
+
+      if (!newUserName || !newUserEmailPrefix || !newUserPassword || !newUserRol) {
+        alert('Por favor, completa todos los campos para crear el usuario.');
+        return;
+      }
+
+      if (newUserPassword.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
+
+      const newUserEmail = `${newUserEmailPrefix}@papeleria.com`;
+
+      try {
+        // Simulación de creación de nuevo usuario
+        console.log(`Creando nuevo usuario: ${newUserName}, ${newUserEmail}, Rol: ${newUserRol}`);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de API
+        openSuccessModal('Usuario creado (simulado) correctamente.');
+        closeCreateUserModal();
+        fetchUsers(); // Recargar tabla de usuarios
+      } catch (error) {
+        console.error('Error al crear nuevo usuario:', error);
+        alert('Error al crear nuevo usuario (simulado).');
+      }
+    }
+
+    // Usuarios - Confirmar Borrado
+    async function confirmDelete() {
+      if (userIdToDelete === null) return;
+
+      try {
+        // Simulación de borrado de usuario
+        console.log(`Borrando usuario con ID: ${userIdToDelete}`);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de API
+        openSuccessModal(`Usuario con ID ${userIdToDelete} borrado (simulado).`);
+        closeDeleteConfirmModal();
+        fetchUsers(); // Recargar tabla de usuarios
+      } catch (error) {
+        console.error('Error al borrar usuario:', error);
+        alert('Error al borrar usuario (simulado).');
+      }
+    }
+
+    // Permisos - Cargar Permisos
+    async function fetchPermisos() {
+      console.log('Fetching permissions...');
+      const permisosTableBody = document.getElementById('permisosTableBody');
+      const permisosError = document.getElementById('permisosError');
+      permisosTableBody.innerHTML = '';
+      permisosError.style.display = 'none';
+
+      try {
+        // Simulación de permisos
+        const permisos = [
+          { rol: 'admin', consultarStock: true, registrarEntrada: true, registrarSalidas: true },
+          { rol: 'logistica', consultarStock: true, registrarEntrada: true, registrarSalidas: true },
+          { rol: 'contador', consultarStock: true, registrarEntrada: false, registrarSalidas: false },
+          { rol: 'cajero', consultarStock: true, registrarEntrada: false, registrarSalidas: false }
+        ];
+
+        if (permisos.length > 0) {
+          permisos.forEach(p => {
+            const row = permisosTableBody.insertRow();
+            row.innerHTML = `
+              <td>${p.rol}</td>
+              <td>${p.consultarStock ? 'Sí' : '<span class="no-permiso">No</span>'}</td>
+              <td>${p.registrarEntrada ? 'Sí' : '<span class="no-permiso">No</span>'}</td>
+              <td>${p.registrarSalidas ? 'Sí' : '<span class="no-permiso">No</span>'}</td>
+            `;
+          });
+        } else {
+          permisosTableBody.innerHTML = '<tr><td colspan="4">No hay permisos definidos.</td></tr>';
+        }
+      } catch (error) {
+        console.error('Error fetching permisos:', error);
+        permisosError.style.display = 'block';
+      }
+    }
+
+    // Permisos - Cargar data para edición
+    async function loadPermisosData() {
+      const permisosRolSelect = document.getElementById('permisosRolSelect');
+      const selectedRol = permisosRolSelect.value;
+      const consultarStockCheckbox = document.getElementById('consultarStock');
+      const registrarEntradaCheckbox = document.getElementById('registrarEntrada');
+      const registrarSalidasCheckbox = document.getElementById('registrarSalidas');
+
+      consultarStockCheckbox.checked = false;
+      registrarEntradaCheckbox.checked = false;
+      registrarSalidasCheckbox.checked = false;
+
+      if (!selectedRol) return;
+
+      try {
+        // Simulación de obtener permisos por rol
+        const allPermisos = [
+          { rol: 'admin', consultarStock: true, registrarEntrada: true, registrarSalidas: true },
+          { rol: 'logistica', consultarStock: true, registrarEntrada: true, registrarSalidas: true },
+          { rol: 'contador', consultarStock: true, registrarEntrada: false, registrarSalidas: false },
+          { rol: 'cajero', consultarStock: true, registrarEntrada: false, registrarSalidas: false }
+        ];
+        const permisos = allPermisos.find(p => p.rol === selectedRol);
+
+        if (permisos) {
+          consultarStockCheckbox.checked = permisos.consultarStock;
+          registrarEntradaCheckbox.checked = permisos.registrarEntrada;
+          registrarSalidasCheckbox.checked = permisos.registrarSalidas;
+        }
+      } catch (error) {
+        console.error('Error loading permisos data:', error);
+      }
+    }
+
+    async function savePermisosChanges() {
+      const permisosRolSelect = document.getElementById('permisosRolSelect');
+      const rol = permisosRolSelect.value;
+      const consultarStock = document.getElementById('consultarStock').checked;
+      const registrarEntrada = document.getElementById('registrarEntrada').checked;
+      const registrarSalidas = document.getElementById('registrarSalidas').checked;
+
+      if (!rol) {
+        alert('Por favor, selecciona un rol.');
+        return;
+      }
+
+      const updatedPermisos = { rol, consultarStock, registrarEntrada, registrarSalidas };
+
+      try {
+        // Simulación de guardar permisos
+        console.log('Guardando permisos:', updatedPermisos);
+        await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de API
+        openSuccessModal('Permisos actualizados (simulado).');
+        closeEditPermisosModal();
+        fetchPermisos(); // Recargar tabla de permisos
+      } catch (error) {
+        console.error('Error al guardar permisos:', error);
+        alert('Error al guardar permisos (simulado).');
+      }
+    }
+
+    // Auditoría - Cargar datos de auditoría
+    async function fetchAuditoria() {
+      console.log('Fetching audit data...');
+      const auditoriaTableBody = document.getElementById('auditoriaTableBody');
+      const auditoriaError = document.getElementById('auditoriaError');
+      auditoriaTableBody.innerHTML = '';
+      auditoriaError.style.display = 'none';
+
+      try {
+        // Simulación de datos de auditoría
+        const auditoria = [
+          { id: 1, usuario: 'Admin Principal', accion: 'Inicio de sesión', fecha: '2024-06-17 10:00:00' },
+          { id: 2, usuario: 'Laura Contadora', accion: 'Consultó inventario', fecha: '2024-06-17 10:15:30' },
+          { id: 3, usuario: 'Pedro Logística', accion: 'Registró entrada de productos', fecha: '2024-06-17 11:05:10' },
+          { id: 4, usuario: 'Admin Principal', accion: 'Creó nuevo usuario', fecha: '2024-06-17 11:30:45' }
+        ];
+
+        if (auditoria.length > 0) {
+          auditoria.forEach(log => {
+            const row = auditoriaTableBody.insertRow();
+            row.innerHTML = `
+              <td>${log.id}</td>
+              <td>${log.usuario}</td>
+              <td>${log.accion}</td>
+              <td>${log.fecha}</td>
+            `;
+          });
+        } else {
+          auditoriaTableBody.innerHTML = '<tr><td colspan="4">No hay registros de auditoría.</td></tr>';
+        }
+      } catch (error) {
+        console.error('Error fetching auditoria data:', error);
+        auditoriaError.style.display = 'block';
+      }
+    }
+
+    // Función de cerrar sesión (simulada)
+    function logout() {
+      alert('Cerrando sesión...');
+      // Redirigir a la página de inicio o login
+      window.location.href = 'index.html';
+    }
+
+    // Inicialización al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      showSection('dashboard'); // Mostrar el dashboard por defecto
+      openModal(); // Mostrar modal de bienvenida
+    });
   </script>
 </body>
 </html>
