@@ -1,319 +1,362 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Inicio</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-   body {
-  font-family: 'Poppins', sans-serif;
-    display: flex;
-    flex-direction: column;
-  justify-content: center;
-   align-items: center;
-    height: 100vh;
-    margin: 0;
-   background-color: #d7d2cb;
-    border: 20px solid #7a8f7a;
-   box-sizing: border-box;
-   }
-  h1 {
-   margin: 0 0 20px;
- font-family: 'Bebas Neue', sans-serif;
-  font-size: 48px;
-   text-transform: uppercase;
-  letter-spacing: 2px;
-}
- .button-container {
-  display: flex;
- flex-wrap: wrap;
-  justify-content: center;
- gap: 20px;
- }
-  .button-row {
- display: flex;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 600px;
-  }
- button {
-  background-color: #f1f1c1;
-   color: #000000;
- border: 2px solid #000000;
-  padding: 15px 30px;
- cursor: pointer;
- font-family: 'Poppins', sans-serif;
- font-size: 18px;
- border-radius: 8px;
- display: flex;
- align-items: center;
- justify-content: center;
- width: 200px;
- gap: 10px;
- }
- button:hover {
- background-color: #d9d9a9;
- }
- .create-user-button, .save-button, .back-button {
- background-color: #e05576;
- color: white;
- border: none;
-}
-.create-user-button:hover, .save-button:hover, .back-button:hover {
-background-color: #b33c5e;
-}
-.create-user-button {
- margin-top: 20px;
- }
- .save-button {
-padding: 10px;
-width: 100%;
-max-width: 100px;
-align-self: center;
-}
-.back-button {
- position: absolute;
- top: 1.5cm;
- left: 1.5cm;
- border-radius: 8px;
- padding: 6px 8px;
- font-size: 12px;
- width: 80px;
- }
- img {
- width: 24px;
- height: 24px;
- }
- .modal {
- display: none;
- position: fixed;
- z-index: 1;
- left: 0;
- top: 0;
- width: 100%;
- height: 100%;
- background-color: rgba(0,0,0,0.5);
- }
- .modal-content {
- background-color: #fefefe;
- margin: 5% auto;
- padding: 20px;
- border: 1px solid #888;
- width: 80%;
- max-width: 400px;
- border-radius: 8px;
- position: relative;
- }
- .close {
- color: #aaa;
- float: right;
- font-size: 28px;
- font-weight: bold;
- cursor: pointer;
-}
-.close:hover {
-color: #000;
- }
- .modal-content h2 {
- margin-top: 0;
- font-family: 'Bebas Neue', sans-serif;
- font-size: 24px;
- }
- .modal-content form {
- display: flex;
- flex-direction: column;
- gap: 15px;
-}
-.modal-content label {
- font-size: 16px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #d7d2cb;
+            border: 20px solid #7a8f7a;
+            box-sizing: border-box;
+        }
+        h1 {
+            margin: 0 0 20px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        button {
+            background-color: #f1f1c1;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            gap: 10px;
+        }
+        button:hover {
+            background-color: #d9d9a9;
+        }
+        .create-user-button, .save-button, .back-button {
+            background-color: #e05576;
+            color: white;
+            border: none;
+        }
+        .create-user-button:hover, .save-button:hover, .back-button:hover {
+            background-color: #b33c5e;
+        }
+        .create-user-button {
+            margin-top: 20px;
+        }
+        .save-button {
+            /* Modificaciones para el botón Guardar */
+            padding: 10px 20px; /* Un poco de padding horizontal también */
+            width: auto;       /* Que el ancho se ajuste al contenido + padding */
+            max-width: 100px;  /* Mantener el máximo si lo deseas */
+            align-self: center; /* Esto está bien si el padre es flex/grid */
+            margin-top: 20px; /* Separación de los campos */
+            display: block; /* Asegura que tome su propio espacio */
+            margin-left: auto; /* Para centrarlo horizontalmente */
+            margin-right: auto; /* Para centrarlo horizontalmente */
+        }
+        .back-button {
+            position: absolute;
+            top: 1.5cm;
+            left: 1.5cm;
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 12px;
+            width: 80px;
+        }
+        img {
+            width: 24px;
+            height: 24px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex; /* Añadido para centrar el modal-content */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            /* margin: 5% auto; /* Removido para usar flex centering del padre */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sutil sombra para que resalte */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            text-align: center; /* Centrar el título */
+            margin-bottom: 20px; /* Espacio debajo del título */
+        }
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .modal-content label {
+            font-size: 16px;
+            margin-bottom: -10px; /* Ajuste para acercar label al input */
+            font-weight: 600; /* Hacer las etiquetas un poco más visibles */
+        }
+        /* --- CAMBIOS IMPORTANTES AQUÍ para inputs y selects --- */
+        .modal-content input,
+        .modal-content select {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-height: 38px; /* Altura mínima para que sean visibles */
+            box-sizing: border-box; /* Padding y borde incluidos en el tamaño total */
+            width: 100%; /* Asegura que ocupen todo el ancho disponible */
+        }
+        /* --- FIN DE CAMBIOS IMPORTANTES --- */
 
-}
-.modal-content input,
- .modal-content select {
- padding: 8px;
- font-size: 14px;
- border: 1px solid #ccc;
-  border-radius: 4px;
- }
- .email-container {
- display: flex;
- align-items: center;
- gap: 5px;
- }
- .email-container input {
- flex: 1;
- }
- .email-container span {
- font-size: 14px;
- color: #333;
- }
- </style>
+        .email-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .email-container input {
+            flex: 1;
+        }
+        .email-container span {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* --- Ajustes Responsivos para móviles --- */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px; /* Título más pequeño en móviles */
+                text-align: center;
+            }
+            .button-row {
+                flex-direction: column; /* Botones en columna en móviles */
+                align-items: center;
+            }
+            button {
+                width: 90%; /* Botones ocupan más ancho en móvil */
+                max-width: 250px;
+            }
+            .back-button {
+                top: 20px;
+                left: 20px;
+            }
+            .modal-content {
+                width: 90%; /* Modal más ancho en móviles */
+                margin: 20px; /* Un poco de margen si no está centrado por flex */
+            }
+        }
+
+    </style>
 </head>
 <body>
- <button class="back-button" onclick="window.location.href='index.html'">Regresar</button>
-<h1>¿Quién inicia sesión hoy?</h1>
- <div class="button-container">
- <div class="button-row">
- <button onclick="window.location.href='inicio_sesion.html?rol=admin'">
- <img src="https://img.icons8.com/color/24/000000/admin-settings-male.png" alt="Admin"> Administración
-      </button>
-      <button onclick="window.location.href='inicio_sesion.html?rol=logistica'">
-        <img src="https://img.icons8.com/color/24/000000/truck.png" alt="Logística"> Logística
-      </button>
-    </div>
-    <div class="button-row">
-      <button onclick="window.location.href='inicio_sesion.html?rol=contador'">
-        <img src="https://img.icons8.com/color/24/000000/calculator.png" alt="Contador"> Contaduría
-      </button>
-      <button onclick="window.location.href='inicio_sesion.html?rol=cajero'">
-        <img src="https://img.icons8.com/color/24/000000/cash.png" alt="Cajero"> Cajero
-      </button>
-    </div>
-  </div>
-  <button class="create-user-button" onclick="openModal()">Crear usuario</button>
+    <button class="back-button" onclick="window.location.href='index.html'">Regresar</button>
+    <h1>¿Quién inicia sesión hoy?</h1>
+    <div class="button-container">
+        <div class="button-row">
+            <button onclick="window.location.href='inicio_sesion.html?rol=admin'">
+                <img src="https://img.icons8.com/color/24/000000/admin-settings-male.png" alt="Admin"> Administración
+            </button>
+            <button onclick="window.location.href='inicio_sesion.html?rol=logistica'">
+                <img src="https://img.icons8.com/color/24/000000/truck.png" alt="Logística"> Logística
+            </button>
+        </div>
+        <div class="button-row">
+            <button onclick="window.location.href='inicio_sesion.html?rol=contador'">
+                <img src="https://img.icons8.com/color/24/000000/calculator.png" alt="Contador"> Contaduría
+            </button>
+            <button onclick="window.location.href='inicio_sesion.html?rol=cajero'">
+                <img src="https://img.icons8.com/color/24/000000/cash.png" alt="Cajero"> Cajero
+            </button>
+        </div>
+    </div>
+    <button class="create-user-button" onclick="openModal()">Crear usuario</button>
 
-  <div id="createUserModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">×</span>
-      <h2>Crear Nuevo Usuario</h2>
-      <form id="createUserForm">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+" title="Solo letras y espacios permitidos">
+    <div id="createUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <h2>Crear Nuevo Usuario</h2>
+            <form id="createUserForm">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+" title="Solo letras y espacios permitidos">
 
-        <label for="email">Correo:</label>
-        <div class="email-container">
-          <input type="text" id="email" name="email" required pattern="[A-Za-z0-9]+" title="Solo letras y números permitidos">
-          <span>@papeleria.com</span>
-        </div>
+                <label for="email">Correo:</label>
+                <div class="email-container">
+                    <input type="text" id="email" name="email" required pattern="[A-Za-z0-9]+" title="Solo letras y números permitidos">
+                    <span>@papeleria.com</span>
+                </div>
 
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required minlength="6" title="Mínimo 6 caracteres">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required minlength="6" title="Mínimo 6 caracteres">
 
-        <label for="rol">Rol:</label>
-        <select id="rol" name="rol" required>
-          <option value="" disabled selected>Selecciona un rol</option>
-          <option value="admin">Administración</option>
-          <option value="logistica">Logística</option>
-          <option value="contador">Contaduría</option>
-          <option value="cajero">Cajero</option>
-        </select>
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" required>
+                    <option value="" disabled selected>Selecciona un rol</option>
+                    <option value="admin">Administración</option>
+                    <option value="logistica">Logística</option>
+                    <option value="contador">Contaduría</option>
+                    <option value="cajero">Cajero</option>
+                </select>
 
-        <button type="submit" class="save-button">Guardar</button>
-      </form>
-    </div>
-  </div>
+                <button type="submit" class="save-button">Guardar</button>
+            </form>
+        </div>
+    </div>
 
-  <script>
-    function openModal() {
-      document.getElementById('createUserModal').style.display = 'block';
-    }
+    <script>
+        function openModal() {
+            document.getElementById('createUserModal').style.display = 'flex'; // Cambiado a 'flex' para centrar
+        }
 
-    function closeModal() {
-      document.getElementById('createUserModal').style.display = 'none';
-      document.getElementById('createUserForm').reset();
-    }
+        function closeModal() {
+            document.getElementById('createUserModal').style.display = 'none';
+            document.getElementById('createUserForm').reset();
+        }
 
-    async function saveUser(event) {
-      event.preventDefault();
-      const form = document.getElementById('createUserForm');
-      const name = form.querySelector('#name').value.trim();
-      const emailPrefix = form.querySelector('#email').value.trim();
-      const password = form.querySelector('#password').value.trim();
-      const rol = form.querySelector('#rol').value;
+        async function saveUser(event) {
+            event.preventDefault();
+            const form = document.getElementById('createUserForm');
+            const name = form.querySelector('#name').value.trim();
+            const emailPrefix = form.querySelector('#email').value.trim();
+            const password = form.querySelector('#password').value.trim();
+            const rol = form.querySelector('#rol').value;
 
-      // Validar campos en el cliente
-      if (!name || !emailPrefix || !password || !rol) {
-        alert('Por favor, completa todos los campos.');
-        return;
-      }
+            // Validar campos en el cliente
+            if (!name || !emailPrefix || !password || !rol) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
 
-      if (!/^[A-Za-z\s]+$/.test(name)) {
-        alert('El nombre solo debe contener letras y espacios.');
-        return;
-      }
+            if (!/^[A-Za-z\s]+$/.test(name)) {
+                alert('El nombre solo debe contener letras y espacios.');
+                return;
+            }
 
-      if (!/^[A-Za-z0-9]+$/.test(emailPrefix)) {
-        alert('El correo solo debe contener letras y números antes de @papeleria.com.');
-        return;
-      }
+            if (!/^[A-Za-z0-9]+$/.test(emailPrefix)) {
+                alert('El correo solo debe contener letras y números antes de @papeleria.com.');
+                return;
+            }
 
-      if (password.length < 6) {
-        alert('La contraseña debe tener al menos 6 caracteres.');
-        return;
-      }
+            if (password.length < 6) {
+                alert('La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
 
-      const email = `${emailPrefix}@papeleria.com`;
-      const payload = { nombre: name, email, password, rol };
+            const email = `${emailPrefix}@papeleria.com`;
+            const payload = { nombre: name, email, password, rol };
 
-      console.log('Payload enviado:', payload); // Debugging: Log the payload
+            console.log('Payload enviado:', payload); // Debugging: Log the payload
 
-      // --- INICIO DE CÓDIGO TEMPORAL DE SIMULACIÓN ---
-      console.log("SIMULANDO CREACIÓN DE USUARIO - ¡Esto no guarda en la base de datos real!");
-      try {
-        const simulatedResponse = await new Promise(resolve => setTimeout(() => {
-          resolve({
-            ok: true, // Simula una respuesta HTTP exitosa
-            json: () => Promise.resolve({ message: 'Usuario creado (SIMULADO) correctamente', usuario_id: Math.floor(Math.random() * 1000) })
-          });
-        }, 500)); // Simula un retraso de 0.5 segundos
+            // --- INICIO DE CÓDIGO TEMPORAL DE SIMULACIÓN ---
+            console.log("SIMULANDO CREACIÓN DE USUARIO - ¡Esto no guarda en la base de datos real!");
+            try {
+                const simulatedResponse = await new Promise(resolve => setTimeout(() => {
+                    resolve({
+                        ok: true, // Simula una respuesta HTTP exitosa
+                        json: () => Promise.resolve({ message: 'Usuario creado (SIMULADO) correctamente', usuario_id: Math.floor(Math.random() * 1000) })
+                    });
+                }, 500)); // Simula un retraso de 0.5 segundos
 
-        const data = await simulatedResponse.json();
+                const data = await simulatedResponse.json();
 
-        if (simulatedResponse.ok) {
-          alert('Usuario creado (simulado) correctamente. ¡Solo para demostración!');
-          closeModal();
-          // Redirección después de simular la creación
-          window.location.href = `inicio_sesion.html?rol=${rol}`;
-        } else {
-          console.error('Error simulado del servidor:', data);
-          alert(`Error: ${data.error || 'No se pudo crear el usuario (simulado). Verifica los datos e intenta de nuevo.'}`);
-        }
-      } catch (error) {
-        console.error('Error simulado al crear usuario:', error);
-        alert(`Error en el servidor (simulado): ${error.message || 'No se pudo conectar con el servidor (simulado).'}`);
-      }
-      // --- FIN DE CÓDIGO TEMPORAL DE SIMULACIÓN ---
+                if (simulatedResponse.ok) {
+                    alert('Usuario creado (simulado) correctamente. ¡Solo para demostración!');
+                    closeModal();
+                    // Redirección después de simular la creación
+                    window.location.href = `inicio_sesion.html?rol=${rol}`;
+                } else {
+                    console.error('Error simulado del servidor:', data);
+                    alert(`Error: ${data.error || 'No se pudo crear el usuario (simulado). Verifica los datos e intenta de nuevo.'}`);
+                }
+            } catch (error) {
+                console.error('Error simulado al crear usuario:', error);
+                alert(`Error en el servidor (simulado): ${error.message || 'No se pudo conectar con el servidor (simulado).'}`);
+            }
+            // --- FIN DE CÓDIGO TEMPORAL DE SIMULACIÓN ---
 
-      /*
-      // Código ORIGINAL comentado para referencia, NO lo uses si estás simulando:
-      try {
-        const response = await fetch('/api/usuario', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
+            /*
+            // Código ORIGINAL comentado para referencia, NO lo uses si estás simulando:
+            try {
+                const response = await fetch('/api/usuario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
 
-        const data = await response.json();
+                const data = await response.json();
 
-        if (response.ok) {
-          alert('Usuario creado correctamente');
-          closeModal();
-          window.location.href = `inicio_sesion.html?rol=${rol}`;
-        } else {
-          console.error('Error del servidor:', data);
-          alert(`Error: ${data.error || 'No se pudo crear el usuario. Verifica los datos e intenta de nuevo.'}`);
-        }
-      } catch (error) {
-        console.error('Error al crear usuario:', error);
-        alert(`Error en el servidor: ${error.message || 'No se pudo conectar con el servidor.'}`);
-      }
-      */
-    }
+                if (response.ok) {
+                    alert('Usuario creado correctamente');
+                    closeModal();
+                    window.location.href = `inicio_sesion.html?rol=${rol}`;
+                } else {
+                    console.error('Error del servidor:', data);
+                    alert(`Error: ${data.error || 'No se pudo crear el usuario. Verifica los datos e intenta de nuevo.'}`);
+                }
+            } catch (error) {
+                console.error('Error al crear usuario:', error);
+                alert(`Error en el servidor: ${error.message || 'No se pudo conectar con el servidor.'}`);
+            }
+            */
+        }
 
-    window.onclick = function(event) {
-      const modal = document.getElementById('createUserModal');
-      if (event.target == modal) {
-        closeModal();
-  }
-}
+        window.onclick = function(event) {
+            const modal = document.getElementById('createUserModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
 
- document.getElementById('createUserForm').addEventListener('submit', saveUser);
-</script>
+        document.getElementById('createUserForm').addEventListener('submit', saveUser);
+    </script>
 </body>
 </html>
