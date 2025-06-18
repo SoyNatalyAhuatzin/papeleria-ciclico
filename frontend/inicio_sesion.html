@@ -156,8 +156,7 @@
       <img id="rolIcon" src="https://img.icons8.com/fluent/40/000000/admin-settings-male.png" alt="Icono">
       <h1 id="welcomeText">¡Bienvenido@, admin!</h1>
     </div>
-    <form action="/login" method="POST">
-      <input type="hidden" name="rol" id="rolInput">
+    <form action="/api/login" method="POST"> <input type="hidden" name="rol" id="rolInput">
       <input type="email" name="email" placeholder="Correo" required>
       <input type="password" name="password" placeholder="Contraseña" required>
       <button type="submit">Entrar</button>
@@ -168,8 +167,7 @@
     <div class="modal-content">
       <span class="close-button" onclick="closeModal()">×</span>
       <h2>Cambiar contraseña</h2>
-      <form id="changePasswordForm" action="/cambiar-contrasena" method="POST">
-        <input type="hidden" name="rol" id="modalRolInput">
+      <form id="changePasswordForm" action="/api/cambiar-contrasena" method="POST"> <input type="hidden" name="rol" id="modalRolInput">
         <input type="email" name="email" placeholder="Correo" required>
         <input type="password" name="newPassword" placeholder="Nueva contraseña" required>
         <p class="requirement">La contraseña debe tener al menos 6 caracteres.</p>
@@ -201,21 +199,82 @@
     }
 
     // Validación básica antes de enviar el formulario
-    document.querySelector('form[action="/login"]').addEventListener('submit', (e) => {
-      const email = document.querySelector('input[name="email"]').value;
-      const password = document.querySelector('input[name="password"]').value;
+    document.querySelector('form[action="/api/login"]').addEventListener('submit', async (e) => { // <-- Cambié la acción del selector aquí también
+      e.preventDefault(); // Prevenir el envío por defecto para manejar la respuesta con JS
+
+      const email = document.querySelector('form[action="/api/login"] input[name="email"]').value;
+      const password = document.querySelector('form[action="/api/login"] input[name="password"]').value;
+      const rol = document.getElementById('rolInput').value;
+
       if (!email.includes('@') || password.length < 6) {
-        e.preventDefault();
         alert('Por favor, ingresa un correo válido y una contraseña de al menos 6 caracteres.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/login', { // <-- Cambié la URL aquí también
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password, rol })
+        });
+
+        if (response.redirected) {
+          window.location.href = response.url; // Sigue la redirección si el backend la envía
+        } else {
+          const result = await response.json(); // Intenta parsear JSON
+          if (!response.ok) {
+            alert('Error al iniciar sesión: ' + (result.error || 'Mensaje de error desconocido.'));
+          } else {
+            // Esto no debería ejecutarse si hay redirección, pero por si acaso.
+            console.log('Inicio de sesión exitoso:', result);
+            alert('Inicio de sesión exitoso, redirigiendo...');
+            // Considera añadir una redirección aquí si no siempre la envía el backend
+            // o si quieres manejar diferentes tipos de éxito.
+          }
+        }
+      } catch (error) {
+        console.error('Error al iniciar sesión (fetch):', error);
+        alert('Error en el servidor al intentar iniciar sesión: ' + error.message);
       }
     });
 
-    document.querySelector('#changePasswordForm').addEventListener('submit', (e) => {
+    document.querySelector('#changePasswordForm').addEventListener('submit', async (e) => { // <-- Cambié el selector aquí también
+      e.preventDefault(); // Prevenir el envío por defecto para manejar la respuesta con JS
+
       const email = document.querySelector('#changePasswordForm input[name="email"]').value;
       const newPassword = document.querySelector('#changePasswordForm input[name="newPassword"]').value;
+      const rol = document.getElementById('modalRolInput').value;
+
       if (!email.includes('@') || newPassword.length < 6) {
-        e.preventDefault();
         alert('Por favor, ingresa un correo válido y una nueva contraseña de al menos 6 caracteres.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/cambiar-contrasena', { // <-- Cambié la URL aquí también
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, newPassword, rol })
+        });
+
+        if (response.redirected) {
+          window.location.href = response.url; // Sigue la redirección
+        } else {
+          const result = await response.json(); // Intenta parsear JSON
+          if (!response.ok) {
+            alert('Error al cambiar contraseña: ' + (result.error || 'Mensaje de error desconocido.'));
+          } else {
+            console.log('Contraseña cambiada exitosamente:', result);
+            alert('Contraseña cambiada correctamente, redirigiendo...');
+          }
+        }
+      } catch (error) {
+        console.error('Error al cambiar contraseña (fetch):', error);
+        alert('Error en el servidor al intentar cambiar contraseña: ' + error.message);
       }
     });
   </script>
