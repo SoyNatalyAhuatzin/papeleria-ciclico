@@ -153,22 +153,22 @@
   </style>
 </head>
 <body>
-  <button class="back-button" onclick="window.location.href='/'">Regresar</button>
+  <button class="back-button" onclick="window.location.href='index.html'">Regresar</button>
   <h1>¿Quién inicia sesión hoy?</h1>
   <div class="button-container">
     <div class="button-row">
-      <button onclick="window.location.href='/login?rol=admin'">
+      <button onclick="window.location.href='inicio_sesion.html?rol=admin'">
         <img src="https://img.icons8.com/color/24/000000/admin-settings-male.png" alt="Admin"> Administración
       </button>
-      <button onclick="window.location.href='/login?rol=logistica'">
+      <button onclick="window.location.href='inicio_sesion.html?rol=logistica'">
         <img src="https://img.icons8.com/color/24/000000/truck.png" alt="Logística"> Logística
       </button>
     </div>
     <div class="button-row">
-      <button onclick="window.location.href='/login?rol=contador'">
+      <button onclick="window.location.href='inicio_sesion.html?rol=contador'">
         <img src="https://img.icons8.com/color/24/000000/calculator.png" alt="Contador"> Contaduría
       </button>
-      <button onclick="window.location.href='/login?rol=cajero'">
+      <button onclick="window.location.href='inicio_sesion.html?rol=cajero'">
         <img src="https://img.icons8.com/color/24/000000/cash.png" alt="Cajero"> Cajero
       </button>
     </div>
@@ -182,16 +182,16 @@
       <form id="createUserForm">
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="name" required pattern="[A-Za-z\s]+" title="Solo letras y espacios permitidos">
-        
+
         <label for="email">Correo:</label>
         <div class="email-container">
           <input type="text" id="email" name="email" required pattern="[A-Za-z0-9]+" title="Solo letras y números permitidos">
           <span>@papeleria.com</span>
         </div>
-        
+
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" required minlength="6" title="Mínimo 6 caracteres">
-        
+
         <label for="rol">Rol:</label>
         <select id="rol" name="rol" required>
           <option value="" disabled selected>Selecciona un rol</option>
@@ -200,7 +200,7 @@
           <option value="contador">Contaduría</option>
           <option value="cajero">Cajero</option>
         </select>
-        
+
         <button type="submit" class="save-button">Guardar</button>
       </form>
     </div>
@@ -264,7 +264,8 @@
         if (response.ok) {
           alert('Usuario creado correctamente');
           closeModal();
-          window.location.href = `/login?rol=${rol}`;
+          // AQUÍ SE CORRIGIÓ LA RUTA PARA LA REDIRECCIÓN DESPUÉS DE CREAR USUARIO
+          window.location.href = `inicio_sesion.html?rol=${rol}`;
         } else {
           console.error('Error del servidor:', data);
           alert(`Error: ${data.error || 'No se pudo crear el usuario. Verifica los datos e intenta de nuevo.'}`);
